@@ -1,0 +1,34 @@
+# Global values
+global:
+  imagePullPolicy: IfNotPresent
+  replicaCount: 1
+
+# Account Management Service
+acctmgmt:
+  image:
+    repository: akushwah/acctmgmt-service
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8092
+    targetPort: 8092
+
+# Notification Service
+notification:
+  image:
+    repository: akushwah/notification-service
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8091
+    targetPort: 8091
+
+# Alert Service
+alert:
+  image:
+    repository: akushwah/alert-service
+    tag: latest
+  service:
+    type: ClusterIP
+    port: 8090
+    targetPort: 8090
