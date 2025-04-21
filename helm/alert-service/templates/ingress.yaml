@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alb-alert-service-ingress
+spec:
+  ingressClassName: alb
+  rules:
+    - host: accounts.local
+      http:
+        paths:
+          - path: /accounts
+            pathType: Prefix
+            backend:
+              service:
+                name: alert-service
+                port:
+                  number: 8091

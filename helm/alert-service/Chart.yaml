@@ -1,6 +1,6 @@
 apiVersion: v2
-name: notification-service-chart
-description: A Helm chart for Kubernetes
+name: alert-service
+description: A Helm chart for alert service
 
 # A chart can be either an 'application' or a 'library' chart.
 #
