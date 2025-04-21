@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: acctmgmt-service
+  labels:
+    app: acctmgmt-service
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 8092
+      targetPort: 8092
+      protocol: TCP
+  selector:
+    app: acctmgmt-service
