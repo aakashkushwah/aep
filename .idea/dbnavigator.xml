@@ -6,7 +6,7 @@
   </component>
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseAssistantManager">
@@ -19,12 +19,14 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[CREATE TABLE bank_account (
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[create database accounts_db owner = 'postgres' encoding = 'UTF8';
+
+CREATE TABLE bank_account (
     account_id SERIAL PRIMARY KEY,  -- Unique identifier for the account
     account_number VARCHAR(20) NOT NULL,  -- Unique account number
     customer_id BIGINT NOT NULL,  -- Foreign key to associate with the customer
@@ -52,18 +54,16 @@ CREATE TABLE bank_account_partition_4 PARTITION OF bank_account
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" object-ref="consoles/Connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" />
   </component>
-  <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" dataset="public.bank_account" active-filter-id="" />
-  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/acctmgmt-service/src/main/resources/db/migration/AM1_2__create_customer_table.sql" connection-id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" session-id="MAIN" current-schema="accounts_db" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
@@ -73,7 +73,7 @@ CREATE TABLE bank_account_partition_4 PARTITION OF bank_account
     <connections>
       <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" active="true" signed="true">
         <database>
-          <name value="Connection" />
+          <name value="accounts_connection" />
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
@@ -84,7 +84,7 @@ CREATE TABLE bank_account_partition_4 PARTITION OF bank_account
           <url-type value="DATABASE" />
           <host value="localhost" />
           <port value="5432" />
-          <database value="postgres" />
+          <database value="accounts_db" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
