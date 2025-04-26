@@ -1,7 +1,4 @@
-1. Publish Events on Kafka from Account Management
-2. Finish the APIs
-3. Consumer Events from Kafka in Notification Service from Account Management and Alert Service
-4. Consumer Events from Kafka in Alert Service Service from Account Management
-5. Notification Service use the DB to save the emails sent
-6. Alert Service use the DB to save the alerts sent and info and action reports
-7. Use Redis Cache for Notification DBs to fetch notification templates
+1. Alert to account management for banned account
+2. if account is banned deactivate the receiver and send an email
+3. Send an email via notification services as well from alert service for banned account
+4. Setup user information in RedisCache and all services will fetch this to get the required information such as notification service can fetch it to get email based on the customer id

@@ -1,7 +1,5 @@
 package com.archexc.acctmgmtservice.controller;
 
-import com.archexc.acctmgmtservice.entity.BankAccount;
-import com.archexc.acctmgmtservice.entity.ReceiverAccount;
 import com.archexc.acctmgmtservice.model.ReceiverAccountDTO;
 import com.archexc.acctmgmtservice.model.ReceiverStatusChangeRequest;
 import com.archexc.acctmgmtservice.service.ReceiverService;
@@ -14,7 +12,7 @@ import java.util.List;
 @RequestMapping("/api/receiver")
 public class ReceiverController {
 
-    private ReceiverService receiverService;
+    private final ReceiverService receiverService;
 
     public ReceiverController(ReceiverService receiverService) {
         this.receiverService = receiverService;
