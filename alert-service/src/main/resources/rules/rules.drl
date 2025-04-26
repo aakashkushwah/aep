@@ -1,0 +1,30 @@
+package rules
+
+import com.archexc.alertservice.model.OrderRequest;
+import com.archexc.alertservice.model.ReceiverAccount;
+
+dialect "mvel"
+
+rule "Raise Alert if order request quantity is 5"
+    when
+        $orderRequest : OrderRequest ( quantity == 5 )
+    then
+        System.out.println("Bank is Restricted for Business: " + $orderRequest);
+        $orderRequest.setStatus("Banned"); //
+end
+
+rule "Raise Alert if Receiver Bank Belongs to AZB"
+    when
+        $receiverAccount : ReceiverAccount ( receiverBankName == "AZB" )
+    then
+        System.out.println("Bank is Restricted for Business: " + $receiverAccount);
+        $receiverAccount.setStatus("Banned"); //
+end
+
+rule "Raise Alert if Receiver Bank Does not Belong to AZB"
+    when
+        $receiverAccount : ReceiverAccount ( receiverBankName != "AZB" )
+    then
+        System.out.println("Bank is Not Restricted for Business: " + $receiverAccount);
+        $receiverAccount.setStatus("Active"); //
+end

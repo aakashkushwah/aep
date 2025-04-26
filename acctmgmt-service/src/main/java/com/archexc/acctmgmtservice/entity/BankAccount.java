@@ -25,8 +25,8 @@ public class BankAccount {
     @Column(name = "account_type", nullable = false, length = 10)
     private String accountType;
 
-    @Column(name = "balance", precision = 15, scale = 2)
-    private BigDecimal balance;
+    @Column(name = "balance")
+    private Double balance;
 
     @Column(name = "currency", nullable = false, length = 10)
     private String currency;

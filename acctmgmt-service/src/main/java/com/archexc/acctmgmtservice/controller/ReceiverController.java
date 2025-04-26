@@ -2,6 +2,7 @@ package com.archexc.acctmgmtservice.controller;
 
 import com.archexc.acctmgmtservice.entity.BankAccount;
 import com.archexc.acctmgmtservice.entity.ReceiverAccount;
+import com.archexc.acctmgmtservice.model.ReceiverAccountDTO;
 import com.archexc.acctmgmtservice.model.ReceiverStatusChangeRequest;
 import com.archexc.acctmgmtservice.service.ReceiverService;
 import org.springframework.http.ResponseEntity;
@@ -20,20 +21,20 @@ public class ReceiverController {
     }
 
     @PostMapping
-    public ResponseEntity<ReceiverAccount> createReceiver(@RequestBody ReceiverAccount receiverAccount) {
-        ReceiverAccount createdReceiver = receiverService.createReceiver(receiverAccount);
+    public ResponseEntity<ReceiverAccountDTO> createReceiver(@RequestBody ReceiverAccountDTO receiverAccount) {
+        ReceiverAccountDTO createdReceiver = receiverService.createReceiver(receiverAccount);
         return ResponseEntity.ok(createdReceiver);
     }
 
     @GetMapping
-    public ResponseEntity<List<ReceiverAccount>> getAllReceivers() {
-        List<ReceiverAccount> receivers = receiverService.getAllReceivers();
+    public ResponseEntity<List<ReceiverAccountDTO>> getAllReceivers() {
+        List<ReceiverAccountDTO> receivers = receiverService.getAllReceivers();
         return ResponseEntity.ok(receivers);
     }
 
     @PostMapping("/status-change")
-    public ResponseEntity<ReceiverAccount> changeStatus(@RequestBody ReceiverStatusChangeRequest request) {
-        ReceiverAccount updatedReceiver = receiverService.statusUpdate(request);
+    public ResponseEntity<ReceiverAccountDTO> changeStatus(@RequestBody ReceiverStatusChangeRequest request) {
+        ReceiverAccountDTO updatedReceiver = receiverService.statusUpdate(request);
         return ResponseEntity.ok(updatedReceiver);
     }
 }

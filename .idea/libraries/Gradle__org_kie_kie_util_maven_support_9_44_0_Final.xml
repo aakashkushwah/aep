@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: org.kie:kie-util-maven-support:9.44.0.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.kie" artifactId="kie-util-maven-support" version="9.44.0.Final" baseVersion="9.44.0.Final" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kie/kie-util-maven-support/9.44.0.Final/707297aea7ab969e7dce89bcbe68637fba93b2c5/kie-util-maven-support-9.44.0.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

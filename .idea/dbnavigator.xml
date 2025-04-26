@@ -27,8 +27,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1">
-      <console name="accounts_connection" type="STANDARD" schema="accounts_db" session="Main"><![CDATA[create database notification_db owner postgres;
-create database alert_db owner postgres;]]></console>
+      <console name="accounts_connection" type="STANDARD" schema="accounts_db" session="Main" />
       <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[create database accounts_db owner = 'postgres' encoding = 'UTF8';
 
 CREATE TABLE bank_account (
@@ -65,9 +64,7 @@ CREATE TABLE bank_account_partition_4 PARTITION OF bank_account
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" object-ref="consoles/accounts_connection" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" />
