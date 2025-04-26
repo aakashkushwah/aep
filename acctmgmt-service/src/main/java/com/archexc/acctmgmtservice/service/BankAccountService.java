@@ -19,16 +19,5 @@ public class BankAccountService {
         return bankAccount;
     }
 
-    public BankAccount createReceiver(BankAccount receiverAccount) {
-        bankAccountRepository.save(receiverAccount);
-        return receiverAccount;
-    }
 
-    public List<BankAccount> getAllReceivers() {
-        return bankAccountRepository.findAll();
-    }
-
-    public void deleteReceiver(Long id) {
-        bankAccountRepository.deleteById(id);
-    }
 }

@@ -59,6 +59,9 @@ CREATE TABLE bank_account_partition_4 PARTITION OF bank_account
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="541fecdb-a7b0-4823-8205-c7cb4e4fb7e1" dataset="public.receiver_account" active-filter-id="" />
+  </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
