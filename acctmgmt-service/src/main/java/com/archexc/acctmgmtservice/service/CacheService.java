@@ -1,14 +1,24 @@
 package com.archexc.acctmgmtservice.service;
 
 import com.archexc.acctmgmtservice.model.UserDetail;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CacheService {
 
-    public void clearCache() {
-        // Logic to clear the cache
-        System.out.println("Cache cleared");
+    private final RedisTemplate<String, Object> redisTemplate;
+
+    public CacheService(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
+    public void saveToCache(String key, String value) {
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    public String getFromCache(String key) {
+        return (String) redisTemplate.opsForValue().get(key);
     }
 
 

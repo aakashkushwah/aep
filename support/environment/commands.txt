@@ -19,3 +19,10 @@ Start a Consumer
 docker exec -it kafka kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning
 
 docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]

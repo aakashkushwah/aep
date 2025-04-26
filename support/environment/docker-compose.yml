@@ -42,3 +42,18 @@ services:
       - "8025:8025"
     depends_on:
       - kafka-ui
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "7080:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
