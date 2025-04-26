@@ -2,9 +2,7 @@ package com.archexc.acctmgmtservice.service;
 
 import com.archexc.acctmgmtservice.entity.BankAccount;
 import com.archexc.acctmgmtservice.entity.ReceiverAccount;
-import com.archexc.acctmgmtservice.model.AccountEvent;
-import com.archexc.acctmgmtservice.model.ReceiverAccountDTO;
-import com.archexc.acctmgmtservice.model.ReceiverStatusChangeRequest;
+import com.archexc.acctmgmtservice.model.*;
 import com.archexc.acctmgmtservice.repository.ReceiverAccountRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +15,12 @@ public class ReceiverService {
 
     private final ReceiverAccountRepository receiverAccountRepository;
     private final KafkaProducerService kafkaProducerService;
+    private final CacheService cacheService;
 
-    public ReceiverService(ReceiverAccountRepository receiverAccountRepository, KafkaProducerService kafkaProducerService) {
+    public ReceiverService(ReceiverAccountRepository receiverAccountRepository, KafkaProducerService kafkaProducerService, CacheService cacheService) {
         this.receiverAccountRepository = receiverAccountRepository;
         this.kafkaProducerService = kafkaProducerService;
+        this.cacheService = cacheService;
     }
 
     public ReceiverAccountDTO createReceiver(ReceiverAccountDTO receiverAccountDTO) {
@@ -34,7 +34,7 @@ public class ReceiverService {
         receiverAccount.setCreatedAt(LocalDateTime.now());
 
         ReceiverAccount savedReceiverAccount = receiverAccountRepository.save(receiverAccount);
-        kafkaProducerService.sendAlertMessage("alert-topic", AccountEvent.builder()
+        kafkaProducerService.sendAlertMessage(AccountEvent.builder()
                         .receiverName(savedReceiverAccount.getReceiverName())
                         .receiverAccountNumber(savedReceiverAccount.getReceiverAccountNumber())
                         .receiverBankName(savedReceiverAccount.getReceiverBankName())
@@ -72,5 +72,22 @@ public class ReceiverService {
         dto.setReceiverCurrency(receiverAccount.getReceiverCurrency());
         dto.setStatus(receiverAccount.getStatus());
         return dto;
+    }
+
+    public void banAccount(ReceiverStatusChangeRequest request) {
+        Optional<ReceiverAccount> receiverAccountOpt = receiverAccountRepository.findByReceiverAccountNumber(request.getReceiverAccountNumber());
+        if(receiverAccountOpt.isPresent()) {
+            ReceiverAccount receiverAccount = receiverAccountOpt.get();
+            receiverAccount.setStatus("Banned");
+            receiverAccountRepository.save(receiverAccount);
+
+            // Send notification to the user
+            UserDetail userDetail = cacheService.getUserDetails(receiverAccount.getBankAccountId());
+            NotificationEvent notificationEvent = new NotificationEvent(userDetail.getEmail(), "NOTIFICATION",
+                    "Your Receiver account "+ receiverAccount.getReceiverAccountNumber()+" is deactivated.");
+            kafkaProducerService.sendNotificationMessage(notificationEvent);
+        } else {
+            throw new RuntimeException("Receiver not found with id: " + request.getReceiverId());
+        }
     }
 }

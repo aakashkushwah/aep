@@ -1,7 +1,9 @@
 package com.archexc.alertservice.service;
 
 import com.archexc.alertservice.model.AccountEvent;
+import com.archexc.alertservice.model.NotificationEvent;
 import com.archexc.alertservice.model.ReceiverAccount;
+import com.archexc.alertservice.model.UserDetail;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.kie.api.runtime.KieContainer;
@@ -19,18 +21,20 @@ import java.util.Map;
 @Service
 public class ReceiverAccountService {
 
-    @Autowired
-    private KafkaTemplate<String, AccountEvent> kafkaTemplateAccount;
 
     @Autowired
     private KieContainer kieContainer;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
+
+    @Autowired
+    private CacheService cacheService;
 
     public ReceiverAccountService(){
         consumeMessages();
     }
 
-//    @Autowired
-//    private KieSession kieSession;
 
     public void processAccount(ReceiverAccount account, Long bankAccountId) {
         // Example of using KieSession to fire rules
@@ -42,6 +46,22 @@ public class ReceiverAccountService {
             // Send alert to the bank account
             System.out.println("Account is banned: " + account.getReceiverAccountNumber());
             // Here you can add logic to send an alert to the bank account
+
+            AccountEvent accountEvent = new AccountEvent();
+            accountEvent.setReceiverAccountNumber(account.getReceiverAccountNumber());
+            accountEvent.setReceiverName(account.getReceiverName());
+            accountEvent.setReceiverBankName(account.getReceiverBankName());
+            accountEvent.setReceiverCurrency(account.getReceiverCurrency());
+            accountEvent.setBankAccountId(bankAccountId);
+            accountEvent.setStatus("Banned");
+            kafkaProducerService.sendAccountMessage( accountEvent);
+
+            // Send notification to the user
+            UserDetail userDetail = cacheService.getUserDetails(bankAccountId);
+            NotificationEvent notificationEvent = new NotificationEvent(userDetail.getEmail(), "ALERT",
+                    "Your Receiver account "+account.getReceiverAccountNumber()+" is banned and will be deactivated.");
+            kafkaProducerService.sendNotificationMessage(notificationEvent);
+
         } else {
             System.out.println("Account is active: " + account.getReceiverAccountNumber());
         }

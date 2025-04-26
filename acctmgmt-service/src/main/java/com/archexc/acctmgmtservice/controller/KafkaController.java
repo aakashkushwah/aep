@@ -20,7 +20,7 @@ public class KafkaController {
 
     @PostMapping("/send-email-msg")
     public String sendEmailMessage(@RequestBody NotificationEvent event) {
-        producer.sendEmailMessage("notification-topic", event);
+        producer.sendNotificationMessage(event);
         return "SentEmailMessage!";
     }
 }

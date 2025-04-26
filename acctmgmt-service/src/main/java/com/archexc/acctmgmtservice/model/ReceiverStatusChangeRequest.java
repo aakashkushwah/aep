@@ -6,5 +6,6 @@ import lombok.Data;
 public class ReceiverStatusChangeRequest {
 
     private Long receiverId;
+    private String receiverAccountNumber;
     private String status;
 }
