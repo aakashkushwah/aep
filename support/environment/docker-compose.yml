@@ -49,6 +49,8 @@ services:
     ports:
       - "7080:6379"
     command: [ "redis-server", "--appendonly", "yes" ]
+    depends_on:
+      - mailhog
 
   redisinsight:
     image: redis/redisinsight:latest
