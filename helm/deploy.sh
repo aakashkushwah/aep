@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Start Minikube if not running
-minikube status || minikube start
-eval $(minikube docker-env)
+#minikube status || minikube start
+#eval $(minikube docker-env)
 
 docker pull akushwah/acctmgmt-service:latest
 docker pull akushwah/alert-service:latest

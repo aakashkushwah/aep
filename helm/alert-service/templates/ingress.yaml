@@ -5,10 +5,10 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: accounts.local
+    - host: alerts.local
       http:
         paths:
-          - path: /accounts
+          - path: /alerts
             pathType: Prefix
             backend:
               service:
