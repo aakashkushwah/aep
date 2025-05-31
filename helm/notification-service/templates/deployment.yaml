@@ -16,8 +16,8 @@ spec:
     spec:
       containers:
         - name: notification-service
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "akushwah/notification-service:latest"
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}

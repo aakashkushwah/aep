@@ -9,7 +9,7 @@ replicaCount: 1
 image:
   repository: akushwah/alert-service
   # This sets the pull policy for images.
-  pullPolicy: IfNotPresent
+  pullPolicy: always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
 
