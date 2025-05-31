@@ -26,3 +26,26 @@ docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog
     ports:
       - "6379:6379"
     command: [ "redis-server", "--appendonly", "yes" ]
+
+
+
+http://localhost:8092/accounts/api/account/register
+
+{
+  "accountNumber": "123456788",
+  "customerId" : 2,
+  "accountType": "Savings",
+  "balance": 5000.75,
+  "currency": "USD"
+
+}
+
+http://localhost:8092/accounts/api/receiver
+{
+  "bankAccountId": 2,
+  "receiverName": "John Doe",
+  "receiverAccountNumber": "1234567",
+  "receiverBankName": "AZB",
+  "receiverCurrency": "USD",
+  "status": "Active"
+}
