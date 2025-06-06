@@ -6,3 +6,5 @@ image:
 service:
   type: ClusterIP
   port: 8091
+kafka:
+  bootstrapServers: "192.168.0.104:9092"

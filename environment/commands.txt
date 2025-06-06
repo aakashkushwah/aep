@@ -1,0 +1,51 @@
+
+Creating a topic
+docker exec kafka kafka-topics.sh --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+docker exec kafka kafka-topics.sh --create --topic notification-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+docker exec kafka kafka-topics.sh --create --topic alert-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+docker exec kafka kafka-topics.sh --create --topic account-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+
+List Topic
+docker exec kafka kafka-topics.sh --list --bootstrap-server localhost:9092
+
+Describe Topic
+docker exec kafka kafka-topics.sh --describe --topic test-topic --bootstrap-server localhost:9092
+
+Start a Producer
+docker exec -it kafka kafka-console-producer.sh --broker-list localhost:9092 --topic test-topic
+
+Start a Consumer
+docker exec -it kafka kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test-topic --from-beginning
+
+docker run -p 1025:1025 -p 8025:8025 mailhog/mailhog
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]
+
+
+
+http://localhost:8092/accounts/api/account/register
+
+{
+  "accountNumber": "123456788",
+  "customerId" : 2,
+  "accountType": "Savings",
+  "balance": 5000.75,
+  "currency": "USD"
+
+}
+
+http://localhost:8092/accounts/api/receiver
+{
+  "bankAccountId": 2,
+  "receiverName": "John Doe",
+  "receiverAccountNumber": "1234567",
+  "receiverBankName": "AZB",
+  "receiverCurrency": "USD",
+  "status": "Active"
+}

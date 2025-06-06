@@ -5,6 +5,7 @@ import com.archexc.acctmgmtservice.model.ReceiverStatusChangeRequest;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.stereotype.Service;
@@ -17,11 +18,12 @@ import java.util.Map;
 @Service
 public class KafkaConsumerService {
 
-
     private final ReceiverService receiverService;
+    private final String kafkaBootstrapServers;
 
-    public KafkaConsumerService(ReceiverService receiverService) {
+    public KafkaConsumerService(ReceiverService receiverService, @Value("${kafka.bootstrap-servers}") String kafkaBootstrapServers) {
         this.receiverService = receiverService;
+        this.kafkaBootstrapServers = kafkaBootstrapServers;
         consumeMessages();
     }
 
@@ -46,7 +48,7 @@ public class KafkaConsumerService {
     private void consumeMessages() {
         ReceiverOptions<String, AccountEvent> options = ReceiverOptions.<String, AccountEvent>create(
                 Map.of(
-                        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
+                        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers,
                         ConsumerConfig.GROUP_ID_CONFIG, "test-group",
                         ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
                         ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,
@@ -70,4 +72,3 @@ public class KafkaConsumerService {
                 .subscribe();
     }
 }
-

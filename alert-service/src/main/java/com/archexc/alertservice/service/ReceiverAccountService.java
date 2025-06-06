@@ -9,6 +9,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,6 @@ import java.util.Map;
 @Service
 public class ReceiverAccountService {
 
-
     @Autowired
     private KieContainer kieContainer;
 
@@ -31,7 +31,10 @@ public class ReceiverAccountService {
     @Autowired
     private CacheService cacheService;
 
-    public ReceiverAccountService(){
+    private final String kafkaBootstrapServers;
+
+    public ReceiverAccountService(@Value("${kafka.bootstrap-servers}") String kafkaBootstrapServers) {
+        this.kafkaBootstrapServers = kafkaBootstrapServers;
         consumeMessages();
     }
 
@@ -72,7 +75,7 @@ public class ReceiverAccountService {
     private void consumeMessages() {
         ReceiverOptions<String, AccountEvent> options = ReceiverOptions.<String, AccountEvent>create(
                 Map.of(
-                        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092",
+                        ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, kafkaBootstrapServers,
                         ConsumerConfig.GROUP_ID_CONFIG, "test-group",
                         ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class,
                         ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class,

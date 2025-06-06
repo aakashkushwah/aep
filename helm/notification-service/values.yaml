@@ -6,3 +6,8 @@ image:
 service:
   type: ClusterIP
   port: 8093
+kafka:
+  bootstrapServers: "192.168.0.104:9092"
+mailhog:
+  host: "192.168.0.104"
+  port: "1025"
