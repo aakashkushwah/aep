@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alert-service
+  name: {{ include "alert-service.fullname" . }}
   labels:
-    app: alert-service
+    app: {{ include "alert-service.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: alert-service
+      app: {{ include "alert-service.name" . }}
   template:
     metadata:
       labels:
-        app: alert-service
+        app: {{ include "alert-service.name" . }}
     spec:
       containers:
-        - name: alert-service
-          image: "akushwah/alert-service:latest"
-          imagePullPolicy: Always
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+            - containerPort: 8091
+

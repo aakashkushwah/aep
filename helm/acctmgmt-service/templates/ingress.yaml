@@ -1,17 +1,24 @@
-{{/*apiVersion: networking.k8s.io/v1*/}}
-{{/*kind: Ingress*/}}
-{{/*metadata:*/}}
-{{/*  name: alb-acctmgmt-service-ingress*/}}
-{{/*spec:*/}}
-{{/*  ingressClassName: alb*/}}
-{{/*  rules:*/}}
-{{/*    - host: accounts.local*/}}
-{{/*      http:*/}}
-{{/*        paths:*/}}
-{{/*          - path: /accounts*/}}
-{{/*            pathType: Prefix*/}}
-{{/*            backend:*/}}
-{{/*              service:*/}}
-{{/*                name: acctmgmt-service*/}}
-{{/*                port:*/}}
-{{/*                  number: 8092*/}}
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "acctmgmt-service.fullname" . }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.className }}
+spec:
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ .path }}
+            pathType: {{ .pathType }}
+            backend:
+              service:
+                name: {{ include "acctmgmt-service.fullname" $ }}
+                port:
+                  number: {{ $.Values.service.port }}
+          {{- end }}
+    {{- end }}
+{{- end }}

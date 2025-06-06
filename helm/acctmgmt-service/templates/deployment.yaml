@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: acctmgmt-service
+  name: {{ include "acctmgmt-service.fullname" . }}
   labels:
-    app: acctmgmt-service
+    app: {{ include "acctmgmt-service.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: acctmgmt-service
+      app: {{ include "acctmgmt-service.name" . }}
   template:
     metadata:
       labels:
-        app: acctmgmt-service
+        app: {{ include "acctmgmt-service.name" . }}
     spec:
       containers:
-        - name: acctmgmt-service
-          image: "akushwah/acctmgmt-service:latest"
-          imagePullPolicy: Always
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+            - containerPort: 8092
+

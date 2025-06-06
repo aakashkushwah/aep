@@ -1,24 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: notification-service
+  name: {{ include "notification-service.fullname" . }}
   labels:
-    app: notification-service
+    app: {{ include "notification-service.name" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: notification-service
+      app: {{ include "notification-service.name" . }}
   template:
     metadata:
       labels:
-        app: notification-service
+        app: {{ include "notification-service.name" . }}
     spec:
       containers:
-        - name: notification-service
-          image: "akushwah/notification-service:latest"
-          imagePullPolicy: Always
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
-              protocol: TCP
+            - containerPort: 8093
+

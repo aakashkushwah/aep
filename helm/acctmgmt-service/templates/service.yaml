@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: acctmgmt-service
+  name: {{ include "acctmgmt-service.fullname" . }}
 spec:
-  type: LoadBalancer  # This exposes it externally (via minikube tunnel)
-  selector:
-    app: acctmgmt-service
+  type: {{ .Values.service.type }}
   ports:
-    - protocol: TCP
-      port: 8092
+    - port: {{ .Values.service.port }}
       targetPort: 8092
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ include "acctmgmt-service.name" . }}
+
