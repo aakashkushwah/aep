@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "acctmgmt-service.fullname" . }}
+  name: {{ include "acctmgmt-service.name" . }}
   annotations:
     kubernetes.io/ingress.class: {{ .Values.ingress.className }}
 spec:
@@ -16,7 +16,7 @@ spec:
             pathType: {{ .pathType }}
             backend:
               service:
-                name: {{ include "acctmgmt-service.fullname" $ }}
+                name: {{ include "acctmgmt-service.name" $ }}
                 port:
                   number: {{ $.Values.service.port }}
           {{- end }}

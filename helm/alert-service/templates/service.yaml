@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "alert-service.fullname" . }}
+  name: {{ include "alert-service.name" . }}
 spec:
   type: {{ .Values.service.type }}
   ports:

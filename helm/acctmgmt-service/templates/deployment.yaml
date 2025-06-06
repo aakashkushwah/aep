@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "acctmgmt-service.fullname" . }}
+  name: {{ include "acctmgmt-service.name" . }}
   labels:
     app: {{ include "acctmgmt-service.name" . }}
 spec:

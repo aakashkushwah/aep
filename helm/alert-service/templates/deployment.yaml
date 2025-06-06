@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "alert-service.fullname" . }}
+  name: {{ include "alert-service.name" . }}
   labels:
     app: {{ include "alert-service.name" . }}
 spec:
