@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: microservices-ingress
+  annotations:
+    konghq.com/strip-path: "true"
+spec:
+  ingressClassName: kong
+  rules:
+    - http:
+        paths:
+          - path: /acct
+            pathType: Prefix
+            backend:
+              service:
+                name: acctmgmt-service
+                port:
+                  number: 8092
+          - path: /notify
+            pathType: Prefix
+            backend:
+              service:
+                name: notification-service
+                port:
+                  number: 8090
+          - path: /alert
+            pathType: Prefix
+            backend:
+              service:
+                name: alert-service
+                port:
+                  number: 8091
